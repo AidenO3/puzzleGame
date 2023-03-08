@@ -1,0 +1,20 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Wall : MonoBehaviour
+{
+
+    void Awake()
+    {
+
+        Map.Insert((int)this.transform.position.x, (int)this.transform.position.y, this.gameObject);
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}
