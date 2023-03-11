@@ -64,8 +64,8 @@ public class Player : MonoBehaviour
                     break;
 
                 case "Goal":
+                    Map.getGoal();
                     freeToMove = true;
-                    Map.getGoal(newPos);
                     break;
 
                 case "Wall":
@@ -97,21 +97,19 @@ public class Player : MonoBehaviour
              
             }
 
-            Debug.Log(newPos[0] + " , " + newPos[1]);
         }
 
         //eat box
-
         if (Input.GetKeyDown("space"))
         {
             if (!stomachFull)
             {
-                Map.moveBox(lookingDir, stomachLocation);
+                if(Map.moveBox(lookingDir, stomachLocation))
                 stomachFull = true;
             }
             else
             {
-                Map.moveBox(stomachLocation, lookingDir);
+                if(Map.moveBox(stomachLocation, lookingDir))
                 stomachFull = false;
             }
         }

@@ -42,6 +42,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: background
+    uniqueID: 1136758147
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Goal
+    uniqueID: 41801541
+    locked: 0
+  - name: BoxKey
+    uniqueID: 4275954541
+    locked: 0
+  - name: Player
+    uniqueID: 1090183845
     locked: 0

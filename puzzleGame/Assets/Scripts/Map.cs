@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Map : MonoBehaviour
 {
+    bool doorUnlocked;
     static private Map M;
     public Player P;
 
@@ -26,6 +27,7 @@ public class Map : MonoBehaviour
         M = this;
         map = new GameObject[camWidth, camHeight];
         level = 0;
+        doorUnlocked = false;
         loadLevel(level);
     }
 
@@ -49,30 +51,48 @@ public class Map : MonoBehaviour
         return map[x, y];
     }
 
-    static public void moveBox(int[] pos1, int[] pos2)
+    static public bool moveBox(int[] pos1, int[] pos2)
     {
         if (Get(pos1).tag == "Box" && Get(pos2).tag != "Wall" && Get(pos2).tag != "Box")
         {
             GameObject box = Get(pos1);
             GameObject temp = Get(pos2);
             Box boxScript = (Box)box.GetComponent(typeof(Box));
-            Insert(pos2, box);
-            Insert(pos1, (GameObject)boxScript.getCoveredSpace());
-            boxScript.setCoveredSpace(temp);
-            boxScript.move(pos2);
-        }
-    }
-
-    static public void getGoal(int[] pos)
-    {
-        if(M.level < M.levelMax - 1)
-        {
-            M.level++;
-            M.loadLevel(M.level);
+            if (Get(pos2).tag == "Goal" && boxScript.isKey)
+            {
+                M.doorUnlocked = true;
+                Insert(pos1, (GameObject)boxScript.getCoveredSpace());
+                Destroy(box);
+            }
+            else
+            {
+                Insert(pos2, box);
+                Insert(pos1, (GameObject)boxScript.getCoveredSpace());
+                boxScript.setCoveredSpace(temp);
+                boxScript.move(pos2);
+            }
+            return true;
         }
         else
         {
-            SceneManager.LoadScene("End");
+            return false;
+        }
+    }
+
+    static public void getGoal()
+    {
+        
+        if (M.doorUnlocked)
+        {
+            if (M.level < M.levelMax - 1)
+            {
+                M.level++;
+                M.loadLevel(M.level);
+            }
+            else
+            {
+                SceneManager.LoadScene("End");
+            }
         }
 
     }
@@ -84,6 +104,7 @@ public class Map : MonoBehaviour
         {
             Destroy(currentLevel);
         }
+        doorUnlocked = false;
         for (int i = 0; i < camWidth; i++)
         {
             for (int j = 0; j < camHeight; j++)
@@ -103,7 +124,7 @@ public class Map : MonoBehaviour
         {
             Destroy(currentLevel);
         }
-
+        doorUnlocked = false;
         for (int i = 0; i < camWidth; i++)
         {
             for (int j = 0; j < camHeight; j++)

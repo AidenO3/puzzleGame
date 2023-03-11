@@ -8,6 +8,7 @@ public class Box : MonoBehaviour
     public int[] pos = { 0, 0 };
     public GameObject coveredSpace;
     public GameObject ground;
+    public bool isKey;
     // Start is called before the first frame update
     void Awake()
     {
@@ -37,4 +38,5 @@ public class Box : MonoBehaviour
     {
         this.transform.position = new Vector2(pos[0], pos[1]);
     }
+
 }
