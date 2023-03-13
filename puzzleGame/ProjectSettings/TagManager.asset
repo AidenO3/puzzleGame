@@ -57,3 +57,6 @@ TagManager:
   - name: Player
     uniqueID: 1090183845
     locked: 0
+  - name: HowToPlay
+    uniqueID: 3093576113
+    locked: 0

@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Manager : MonoBehaviour
+public class HowToPlay : MonoBehaviour
 {
-    public int level = 1;
-    public GameObject[] levels;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,5 +15,13 @@ public class Manager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void Play()
+    {
+        if (!Input.GetKeyDown("space"))
+        {
+            SceneManager.LoadScene("Gameplay");
+        }
     }
 }

@@ -5,50 +5,59 @@ using static UnityEditor.PlayerSettings;
 
 public class Player : MonoBehaviour
 {
+    public Sprite[] playerSprites;
+    SpriteRenderer pRend;
     int[] pos = { 0, 0 };
     bool freeToMove;
     bool pushBox;
     bool stomachFull;
     int[] stomachLocation;
     int[] lookingDir = new int[2];
-    // Start is called before the first frame update
+
+
     void Awake()
     {
         stomachLocation = Map.boxStorage;
         freeToMove = false;
         pos[0] = (int)this.transform.position.x;
         pos[1] = (int)this.transform.position.y;
-        lookingDir[0] = pos[0] + 1;
-        lookingDir[1] = pos[1];
+        lookingDir[0] = pos[0];
+        lookingDir[1] = pos[1] - 1;
+        pRend = this.GetComponent<SpriteRenderer>();
+        
     }
 
     void Update()
     {
         //move with arrow keys
         int[] newPos = { pos[0], pos[1] };
-        if (Input.GetKeyDown("up"))
+        if (Input.GetKeyDown("up") || Input.GetKeyDown("w"))
         {
             newPos[1]++;
             lookingDir[0] = pos[0];
             lookingDir[1] = pos[1] + 1;
+            pRend.sprite = playerSprites[1];
         }
-        if (Input.GetKeyDown("down"))
+        if (Input.GetKeyDown("down") || Input.GetKeyDown("s"))
         {
             newPos[1]--;
             lookingDir[0] = pos[0];
             lookingDir[1] = pos[1] - 1;
+            pRend.sprite = playerSprites[0];
         }
-        if (Input.GetKeyDown("right") && newPos[1] == pos[1])
+        if ((Input.GetKeyDown("right") || Input.GetKeyDown("d")) && newPos[1] == pos[1])
         {
             newPos[0]++;
             lookingDir[0] = pos[0] + 1;
             lookingDir[1] = pos[1];
+            pRend.sprite = playerSprites[2];
         }
-        if (Input.GetKeyDown("left") && newPos[1] == pos[1])
+        if ((Input.GetKeyDown("left") || Input.GetKeyDown("a")) && newPos[1] == pos[1])
         {
             newPos[0]--;
             lookingDir[0] = pos[0] - 1;
             lookingDir[1] = pos[1];
+            pRend.sprite = playerSprites[3];
         }
 
         //check for walls or boxes

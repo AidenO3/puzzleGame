@@ -19,6 +19,9 @@ public class TitleScreen : MonoBehaviour
 
     public void Play()
     {
-         SceneManager.LoadScene("Gameplay");
+        if (!Input.GetKeyDown("space"))
+        {
+            SceneManager.LoadScene("HowToPlay");
+        }
     }
 }

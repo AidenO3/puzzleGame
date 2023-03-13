@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Map : MonoBehaviour
 {
+    public levelCounter levelCounter;
     bool doorUnlocked;
     static private Map M;
     public Player P;
@@ -18,7 +20,7 @@ public class Map : MonoBehaviour
 
     public GameObject ground;
     public GameObject player;
-    static public int[] boxStorage = {22, 10};
+    static public int[] boxStorage = {22, 7};
     public int camWidth = 24;
     public int camHeight = 12;
 
@@ -26,7 +28,6 @@ public class Map : MonoBehaviour
     {
         M = this;
         map = new GameObject[camWidth, camHeight];
-        level = 0;
         doorUnlocked = false;
         loadLevel(level);
     }
@@ -84,9 +85,10 @@ public class Map : MonoBehaviour
         
         if (M.doorUnlocked)
         {
-            if (M.level < M.levelMax - 1)
+            M.level++;
+            
+            if (M.level < M.levelMax)
             {
-                M.level++;
                 M.loadLevel(M.level);
             }
             else
@@ -104,6 +106,7 @@ public class Map : MonoBehaviour
         {
             Destroy(currentLevel);
         }
+        levelCounter.level = level;
         doorUnlocked = false;
         for (int i = 0; i < camWidth; i++)
         {
@@ -116,25 +119,13 @@ public class Map : MonoBehaviour
         P = (Player)currentLevel.GetComponent(typeof(Player));
 
 
+
     }
 
     public void Restart()
     {
-        if (currentLevel != null)
-        {
-            Destroy(currentLevel);
-        }
-        doorUnlocked = false;
-        for (int i = 0; i < camWidth; i++)
-        {
-            for (int j = 0; j < camHeight; j++)
-                map[i, j] = Instantiate(ground) as GameObject;
-        }
-        currentLevel = Instantiate<GameObject>(levels[level]);
-        currentLevel.transform.position = Vector2.zero;
-
-        P = (Player)currentLevel.GetComponent(typeof(Player));
-
+        if(!Input.GetKeyDown("space"))
+        loadLevel(level);
     }
 
 }
