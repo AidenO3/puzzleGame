@@ -3,30 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class Map : MonoBehaviour
 {
     public levelCounter levelCounter;
+    public LevelNames levelNames;
     bool doorUnlocked;
     static private Map M;
     public Player P;
 
     public int levelMax = 2;
-    public int level = 1;
+    public int level = 0;
     static public GameObject[,] map;
     public GameObject[] levels;
     public GameObject currentLevel;
 
     public GameObject ground;
     public GameObject player;
-    static public int[] boxStorage = {22, 7};
+    static public int[] boxStorage = {21, 6};
     public int camWidth = 24;
     public int camHeight = 12;
 
     void Start()
     {
         M = this;
+        level = 0;
         map = new GameObject[camWidth, camHeight];
         doorUnlocked = false;
         loadLevel(level);
@@ -107,6 +108,7 @@ public class Map : MonoBehaviour
             Destroy(currentLevel);
         }
         levelCounter.level = level;
+        levelNames.level = level;
         doorUnlocked = false;
         for (int i = 0; i < camWidth; i++)
         {

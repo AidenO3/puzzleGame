@@ -2,22 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-public class levelCounter : MonoBehaviour
+public class LevelNames : MonoBehaviour
 {
-    public int level = 0;
+    public string[] levelNames;
+    public int level;
     private Text uiText;
-
-    private void Start()
+    // Start is called before the first frame update
+    void Start()
     {
         level = 0;
         uiText = GetComponent<Text>();
-        uiText.text = ("Level " + (0 + 1) + ":");
+        uiText.text = (levelNames[level]);
     }
 
     // Update is called once per frame
     void Update()
     {
-        uiText.text = ("Level " + (level + 1) + ":");
+        uiText.text = (levelNames[level]);
     }
 }
